@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom GTA Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    var map = L.map('map', {
+        crs: L.CRS.Simple,
+        minZoom: -2,
+    });
+
+    var bounds = [[0,0], [4096,4096]];
+    var image = L.imageOverlay('gta_map_clean.jpg', bounds).addTo(map);
+    map.fitBounds(bounds);
+
+    
+    L.marker([3900, 300]).addTo(map)
+        .bindPopup("<b>Unnamed</b><br>Foundry<br>9306");
+    
+    L.marker([3700, 1300]).addTo(map)
+        .bindPopup("<b>Strange Man</b><br>Unknown Location<br>986");
+    
+    L.marker([3500, 2300]).addTo(map)
+        .bindPopup("<b>Unnamed</b><br>Recycle Center<br>3048");
+    
+    L.marker([3300, 3300]).addTo(map)
+        .bindPopup("<b>Fabric</b><br>Unknown Location<br>8182");
+    
+    L.marker([3100, 300]).addTo(map)
+        .bindPopup("<b>Crusher</b><br>Recycled Goods<br>915");
+    
+    L.marker([2900, 1300]).addTo(map)
+        .bindPopup("<b>Unnamed</b><br>Industrial - Power Plant<br>N/A");
+    
+    L.marker([2700, 2300]).addTo(map)
+        .bindPopup("<b>PC Parts</b><br>Unknown Location<br>798");
+    
+    L.marker([2500, 3300]).addTo(map)
+        .bindPopup("<b>NOS</b><br>Stab City<br>1033");
+    
+    L.marker([2300, 300]).addTo(map)
+        .bindPopup("<b>Unnamed</b><br>Unknown Location<br>1009 & 2040");
+    
+    L.marker([2100, 1300]).addTo(map)
+        .bindPopup("<b>Armour Plate</b><br>Fudge Lane (near 9388)<br>N/A");
+    
+    L.marker([1900, 2300]).addTo(map)
+        .bindPopup("<b>Armour Plate</b><br>Grove Street<br>9105");
+    
+    L.marker([1700, 3300]).addTo(map)
+        .bindPopup("<b>Unnamed</b><br>Chicken Factory<br>1029");
+    
+    L.marker([1500, 300]).addTo(map)
+        .bindPopup("<b>Pack-A-Box</b><br>Chicken Factory<br>1024");
+    
+    L.marker([1300, 1300]).addTo(map)
+        .bindPopup("<b>Pack-A-Box</b><br>Chicken Factory<br>1023");
+    
+    L.marker([1100, 2300]).addTo(map)
+        .bindPopup("<b>Pack-A-Box</b><br>Goods Market<br>2030");
+    
+</script>
+</body>
+</html>
