@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GTA Map - Colored Pins + Ocean</title>
+  <title>GTA Map - Full Blue Background</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link
@@ -13,11 +13,15 @@
     html, body {
       height: 100%;
       margin: 0;
-      background-color: #70d0ec; /* light ocean blue */
+      background-color: #0fa8d2;
     }
     #map {
-      width: 100%;
-      height: 100%;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      z-index: 1;
     }
   </style>
 </head>
