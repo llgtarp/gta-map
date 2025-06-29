@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GTA Map - Full Blue Background</title>
+  <title>GTA Map - Full Background Fix</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link
@@ -15,13 +15,17 @@
       margin: 0;
       background-color: #0fa8d2;
     }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     #map {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      z-index: 1;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      background-color: #0fa8d2;
     }
   </style>
 </head>
