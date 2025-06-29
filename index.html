@@ -2,47 +2,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Custom GTA Map</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <style>
-        html, body, #map {
-            height: 100%;
-            margin: 0;
-            background-color: #5eb6db;
-        }
-    </style>
+  <title>GTA Map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+  />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    #map {
+      width: 100%;
+      height: 100%;
+      background-color: #4ba3c7;
+    }
+  </style>
 </head>
 <body>
-<div id="map"></div>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script>
-    var map = L.map('map', {
-        crs: L.CRS.Simple,
-        minZoom: -2,
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map', {
+      crs: L.CRS.Simple,
+      minZoom: -2
     });
 
-    var bounds = [[0,0], [2047, 1651]];
-    var image = L.imageOverlay('gta_map_clean.jpg', bounds).addTo(map);
+    const bounds = [[0,0], [2047,1651]];
+    const image = L.imageOverlay('gta_map_clean.jpg', bounds).addTo(map);
     map.fitBounds(bounds);
 
-    
-    L.marker([1900, 300]).addTo(map)
-        .bindPopup("<b>Unnamed</b><br>Foundry<br>9306");
-    
-    L.marker([1700, 1300]).addTo(map)
-        .bindPopup("<b>Strange Man</b><br>Unknown Location<br>986");
-    
-    L.marker([1500, 300]).addTo(map)
-        .bindPopup("<b>Unnamed</b><br>Recycle Center<br>3048");
-    
-    L.marker([1300, 1300]).addTo(map)
-        .bindPopup("<b>Fabric</b><br>Unknown Location<br>8182");
-    
-    L.marker([1100, 300]).addTo(map)
-        .bindPopup("<b>Crusher</b><br>Recycled Goods<br>915");
-    
-</script>
+    fetch('pins.json')
+      .then(response => response.json())
+      .then(pins => {
+        pins.forEach(pin => {
+          const marker = L.circleMarker([pin.lat, pin.lon], {
+            radius: 6,
+            color: pin.color || 'red',
+            fillColor: pin.color || 'red',
+            fillOpacity: 1
+          }).addTo(map);
+
+          let popup = `<b>${pin.label}</b>`;
+          if (pin.location) popup += `<br>${pin.location}`;
+          if (pin.postcode) popup += `<br>PC ${pin.postcode}`;
+          marker.bindPopup(popup);
+        });
+      });
+  </script>
 </body>
 </html>
