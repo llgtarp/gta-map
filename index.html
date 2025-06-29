@@ -2,13 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GTA Map - Final Label Cleanup</title>
+  <title>GTA Map - With Collapsible Legend</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     html, body {
       height: 100%;
@@ -25,14 +22,51 @@
       height: 100%;
       max-width: 100%;
       max-height: 100%;
-      background-color: #0fa8d2;
+    }
+    .legend {
+      background: white;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.3);
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+    }
+    .legend.collapsed .legend-items {
+      display: none;
+    }
+    .legend h4 {
+      margin: 0;
+      cursor: pointer;
+    }
+    .legend div {
+      margin-top: 5px;
     }
   </style>
 </head>
 <body>
   <div id="map"></div>
+  <div class="legend collapsed" id="legend">
+    <h4 onclick="toggleLegend()">Legend ⬇️</h4>
+    <div class="legend-items">
+      <div><span style='color: green;'>●</span> Weed Strains</div>
+      <div><span style='color: red;'>●</span> Nodes</div>
+      <div><span style='color: lightblue;'>●</span> Garages</div>
+      <div><span style='color: orange;'>●</span> Crafting Bench</div>
+    </div>
+  </div>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
+    function toggleLegend() {
+      const legend = document.getElementById("legend");
+      legend.classList.toggle("collapsed");
+      legend.querySelector("h4").textContent =
+        legend.classList.contains("collapsed") ? "Legend ⬇️" : "Legend ⬆️";
+    }
+
     const map = L.map('map', {
       crs: L.CRS.Simple,
       minZoom: -2,
