@@ -55,9 +55,7 @@
 </head>
 <body>
   <div id="map"></div>
-  <div id="sidebar">
-    <h3>📌 Map Index</h3>
-    <div id="index-content"></div>
+  
   </div>
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -153,37 +151,7 @@
     }
   </script>
 
-<!-- Search Bar -->
-<div id="search-container">
-  <input type="text" id="search-bar" placeholder="Search for a location..." />
-</div>
 
-<style>
-  #search-container {
-    position: fixed;
-    top: 20px;
-    right: 310px;
-    z-index: 999;
-  }
-  #search-bar {
-    padding: 8px;
-    width: 200px;
-    font-size: 14px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-</style>
-
-<script>
-document.getElementById('search-bar').addEventListener('input', function (e) {
-    const query = e.target.value.toLowerCase();
-    const listItems = document.querySelectorAll('#sidebar ul li');
-    listItems.forEach(item => {
-        const match = item.textContent.toLowerCase().includes(query);
-        item.style.display = match ? 'block' : 'none';
-    });
-});
-</script>
 
 </body>
 </html>
