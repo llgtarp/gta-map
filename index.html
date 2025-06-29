@@ -2,57 +2,155 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GTA Map</title>
+  <title>Custom GTA Map</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link
     rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-sA+4J9tf+Zc0tRmbzD1rEyh4OdtPzvGc3Xj3/Td6S5k="
+    crossorigin=""
   />
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
+    body, html {
       height: 100%;
+      margin: 0;
+      background-color: #70d0ec;
+      font-family: sans-serif;
     }
     #map {
-      width: 100%;
+      width: calc(100% - 250px);
       height: 100%;
-      background-color: #4ba3c7;
+      float: left;
+    }
+    #sidebar {
+      width: 250px;
+      height: 100%;
+      float: right;
+      background: #ffffffdd;
+      overflow-y: auto;
+      padding: 10px;
+      box-sizing: border-box;
+      border-left: 2px solid #ccc;
+    }
+    .emoji-marker {
+      font-size: 22px;
+    }
+    .weed-icon {
+      width: 28px;
+      height: 28px;
+    }
+    .category {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .pin-entry {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    .pin-entry:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <div id="map"></div>
-
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <div id="sidebar">
+    <h3>📌 Map Index</h3>
+    <div id="index-content"></div>
+  </div>
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-o9N1j7kPjJ1iJ5H6kA+Q3Uq6LVv3XYhIm+YvTtnf5eE="
+    crossorigin=""
+  ></script>
   <script>
     const map = L.map('map', {
       crs: L.CRS.Simple,
-      minZoom: -2
+      minZoom: -2,
+      maxZoom: 5,
+      zoomSnap: 0.25,
     });
 
-    const bounds = [[0,0], [2047,1651]];
+    const bounds = [[0, 0], [1651, 1200]];
     const image = L.imageOverlay('gta_map_clean.jpg', bounds).addTo(map);
     map.fitBounds(bounds);
 
-    fetch('pins.json')
-      .then(response => response.json())
-      .then(pins => {
-        pins.forEach(pin => {
-          const marker = L.circleMarker([pin.lat, pin.lon], {
-            radius: 6,
-            color: pin.color || 'red',
-            fillColor: pin.color || 'red',
-            fillOpacity: 1
-          }).addTo(map);
+    const pins = [{"lat": 880, "lon": 843, "label": "Stereo Sonic", "color": "green"}, {"lat": 1018, "lon": 710, "label": "Bloodmoon", "color": "green"}, {"lat": 806, "lon": 502, "label": "Strawberry Kush", "color": "green"}, {"lat": 976, "lon": 934, "label": "Ned Kelly", "color": "green"}, {"lat": 1508, "lon": 453, "label": "Garden Variety", "color": "green"}, {"lat": 1950, "lon": 553, "label": "Garden Variety", "color": "green"}, {"lat": 1185, "lon": 525, "label": "Nightshade", "color": "green"}, {"lat": 1573, "lon": 816, "label": "Mount Baw Baw", "color": "green"}, {"lat": 243, "lon": 1406, "label": "Blue Tongue", "color": "green"}, {"lat": 1574, "lon": 1044, "label": "Plain Jane", "color": "green"}, {"lat": 459, "lon": 824, "label": "Node Controllers", "color": "black"}, {"lat": 601, "lon": 773, "label": "Bottle Caps", "color": "black"}, {"lat": 567, "lon": 934, "label": "Gun Node", "color": "black"}, {"lat": 1095, "lon": 684, "label": "Ammo Node", "color": "black"}, {"lat": 1246, "lon": 804, "label": "Gun Node", "color": "black"}, {"lat": 1277, "lon": 1110, "label": "Trucking Node", "color": "black"}, {"lat": 1644, "lon": 707, "label": "Ammo Node", "color": "black"}, {"lat": 1660, "lon": 747, "label": "Armour Node", "color": "black"}, {"lat": 712, "lon": 579, "label": "Garage", "color": "blue"}, {"lat": 650, "lon": 642, "label": "Garage", "color": "blue"}, {"lat": 620, "lon": 590, "label": "Garage", "color": "blue"}, {"lat": 622, "lon": 707, "label": "Garage", "color": "blue"}, {"lat": 540, "lon": 743, "label": "Garage", "color": "blue"}, {"lat": 505, "lon": 641, "label": "Garage", "color": "blue"}, {"lat": 392, "lon": 920, "label": "Garage", "color": "blue"}, {"lat": 480, "lon": 876, "label": "Garage", "color": "blue"}, {"lat": 611, "lon": 872, "label": "Garage", "color": "blue"}, {"lat": 665, "lon": 842, "label": "Garage", "color": "blue"}, {"lat": 673, "lon": 742, "label": "Garage", "color": "blue"}, {"lat": 718, "lon": 779, "label": "Garage", "color": "blue"}, {"lat": 703, "lon": 703, "label": "Garage", "color": "blue"}, {"lat": 776, "lon": 788, "label": "Garage", "color": "blue"}, {"lat": 717, "lon": 889, "label": "Garage", "color": "blue"}, {"lat": 868, "lon": 668, "label": "Garage", "color": "blue"}, {"lat": 763, "lon": 543, "label": "Garage", "color": "blue"}, {"lat": 872, "lon": 349, "label": "Garage", "color": "blue"}, {"lat": 1034, "lon": 1080, "label": "Garage", "color": "blue"}, {"lat": 1180, "lon": 899, "label": "Garage", "color": "blue"}, {"lat": 1287, "lon": 1112, "label": "Garage", "color": "blue"}, {"lat": 1350, "lon": 1026, "label": "Garage", "color": "blue"}, {"lat": 763, "lon": 543, "label": "Garage", "color": "blue"}, {"lat": 1466, "lon": 977, "label": "Garage", "color": "blue"}, {"lat": 1527, "lon": 673, "label": "Garage", "color": "blue"}, {"lat": 1710, "lon": 765, "label": "Garage", "color": "blue"}, {"lat": 1786, "lon": 628, "label": "Garage", "color": "blue"}, {"lat": 1812, "lon": 696, "label": "Garage", "color": "blue"}, {"lat": 624, "lon": 877, "label": "Crafting Bench", "color": "orange"}];
 
-          let popup = `<b>${pin.label}</b>`;
-          if (pin.location) popup += `<br>${pin.location}`;
-          if (pin.postcode) popup += `<br>PC ${pin.postcode}`;
-          marker.bindPopup(popup);
+    const categories = {
+      green: { name: 'Weed Strains', icon: '<img src="weed_icon.png" class="weed-icon">' },
+      black: { name: 'Nodes', icon: '📍' },
+      blue: { name: 'Garages', icon: '🅿️' },
+      orange: { name: 'Crafting Benches', icon: '🛠️' },
+    };
+
+    const groupedPins = {};
+    pins.forEach(pin => {
+      if (!groupedPins[pin.color]) groupedPins[pin.color] = [];
+      groupedPins[pin.color].push(pin);
+    });
+
+    const indexContent = document.getElementById('index-content');
+
+    pins.forEach(pin => {
+      let marker;
+
+      if (pin.color === 'green') {
+        const icon = L.icon({
+          iconUrl: 'weed_icon.png',
+          iconSize: [28, 28],
+          className: 'weed-icon'
         });
+        marker = L.marker([pin.lat, pin.lon], { icon });
+      } else if (pin.color === 'black') {
+        marker = L.marker([pin.lat, pin.lon], {
+          icon: L.divIcon({
+            className: 'emoji-marker',
+            html: '📍'
+          })
+        });
+      } else if (pin.color === 'blue') {
+        marker = L.marker([pin.lat, pin.lon], {
+          icon: L.divIcon({
+            className: 'emoji-marker',
+            html: '🅿️'
+          })
+        });
+      } else if (pin.color === 'orange') {
+        marker = L.marker([pin.lat, pin.lon], {
+          icon: L.divIcon({
+            className: 'emoji-marker',
+            html: '🛠️'
+          })
+        });
+      }
+
+      marker.bindPopup(pin.label);
+      marker.addTo(map);
+      pin._marker = marker;
+    });
+
+    for (const [color, group] of Object.entries(groupedPins)) {
+      const section = document.createElement('div');
+      const title = document.createElement('div');
+      title.className = 'category';
+      title.innerHTML = `${categories[color].icon} ${categories[color].name}`;
+      section.appendChild(title);
+
+      group.forEach(pin => {
+        const entry = document.createElement('div');
+        entry.className = 'pin-entry';
+        entry.innerText = pin.label;
+        entry.onclick = () => {
+          map.setView([pin.lat, pin.lon], 1);
+          pin._marker.openPopup();
+        };
+        section.appendChild(entry);
       });
+
+      indexContent.appendChild(section);
+    }
   </script>
 </body>
 </html>
