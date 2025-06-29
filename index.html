@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GTA Map - Pins Only</title>
+  <title>GTA Map - Default Pins</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link
@@ -21,13 +21,6 @@
       width: 100%;
       height: 100%;
     }
-    .emoji-marker {
-      font-size: 22px;
-    }
-    .weed-icon {
-      width: 28px;
-      height: 28px;
-    }
   </style>
 </head>
 <body>
@@ -42,7 +35,7 @@
       crs: L.CRS.Simple,
       minZoom: -2,
       maxZoom: 5,
-      zoomSnap: 0.25,
+      zoomSnap: 0.25
     });
 
     const bounds = [[0, 0], [1651, 1200]];
@@ -52,47 +45,7 @@
     const pins = [{"lat": 880, "lon": 843, "label": "Stereo Sonic", "color": "green"}, {"lat": 1018, "lon": 710, "label": "Bloodmoon", "color": "green"}, {"lat": 806, "lon": 502, "label": "Strawberry Kush", "color": "green"}, {"lat": 976, "lon": 934, "label": "Ned Kelly", "color": "green"}, {"lat": 1508, "lon": 453, "label": "Garden Variety", "color": "green"}, {"lat": 1950, "lon": 553, "label": "Garden Variety", "color": "green"}, {"lat": 1185, "lon": 525, "label": "Nightshade", "color": "green"}, {"lat": 1573, "lon": 816, "label": "Mount Baw Baw", "color": "green"}, {"lat": 243, "lon": 1406, "label": "Blue Tongue", "color": "green"}, {"lat": 1574, "lon": 1044, "label": "Plain Jane", "color": "green"}, {"lat": 459, "lon": 824, "label": "Node Controllers", "color": "black"}, {"lat": 601, "lon": 773, "label": "Bottle Caps", "color": "black"}, {"lat": 567, "lon": 934, "label": "Gun Node", "color": "black"}, {"lat": 1095, "lon": 684, "label": "Ammo Node", "color": "black"}, {"lat": 1246, "lon": 804, "label": "Gun Node", "color": "black"}, {"lat": 1277, "lon": 1110, "label": "Trucking Node", "color": "black"}, {"lat": 1644, "lon": 707, "label": "Ammo Node", "color": "black"}, {"lat": 1660, "lon": 747, "label": "Armour Node", "color": "black"}, {"lat": 712, "lon": 579, "label": "Garage", "color": "blue"}, {"lat": 650, "lon": 642, "label": "Garage", "color": "blue"}, {"lat": 620, "lon": 590, "label": "Garage", "color": "blue"}, {"lat": 622, "lon": 707, "label": "Garage", "color": "blue"}, {"lat": 540, "lon": 743, "label": "Garage", "color": "blue"}, {"lat": 505, "lon": 641, "label": "Garage", "color": "blue"}, {"lat": 392, "lon": 920, "label": "Garage", "color": "blue"}, {"lat": 480, "lon": 876, "label": "Garage", "color": "blue"}, {"lat": 611, "lon": 872, "label": "Garage", "color": "blue"}, {"lat": 665, "lon": 842, "label": "Garage", "color": "blue"}, {"lat": 673, "lon": 742, "label": "Garage", "color": "blue"}, {"lat": 718, "lon": 779, "label": "Garage", "color": "blue"}, {"lat": 703, "lon": 703, "label": "Garage", "color": "blue"}, {"lat": 776, "lon": 788, "label": "Garage", "color": "blue"}, {"lat": 717, "lon": 889, "label": "Garage", "color": "blue"}, {"lat": 868, "lon": 668, "label": "Garage", "color": "blue"}, {"lat": 763, "lon": 543, "label": "Garage", "color": "blue"}, {"lat": 872, "lon": 349, "label": "Garage", "color": "blue"}, {"lat": 1034, "lon": 1080, "label": "Garage", "color": "blue"}, {"lat": 1180, "lon": 899, "label": "Garage", "color": "blue"}, {"lat": 1287, "lon": 1112, "label": "Garage", "color": "blue"}, {"lat": 1350, "lon": 1026, "label": "Garage", "color": "blue"}, {"lat": 763, "lon": 543, "label": "Garage", "color": "blue"}, {"lat": 1466, "lon": 977, "label": "Garage", "color": "blue"}, {"lat": 1527, "lon": 673, "label": "Garage", "color": "blue"}, {"lat": 1710, "lon": 765, "label": "Garage", "color": "blue"}, {"lat": 1786, "lon": 628, "label": "Garage", "color": "blue"}, {"lat": 1812, "lon": 696, "label": "Garage", "color": "blue"}, {"lat": 624, "lon": 877, "label": "Crafting Bench", "color": "orange"}];
 
     pins.forEach(pin => {
-      let marker;
-
-      if (pin.color === 'green') {
-      marker = L.marker([pin.lat, pin.lon], {
-        icon: L.divIcon({
-          className: 'emoji-marker',
-          html: '🍃'
-        })
-      });
-      } else if (pin.color === 'black') {
-        marker = L.marker([pin.lat, pin.lon], {
-          icon: L.divIcon({
-            className: 'emoji-marker',
-            html: '📍'
-          })
-        });
-      } else if (pin.color === 'blue') {
-        marker = L.marker([pin.lat, pin.lon], {
-          icon: L.divIcon({
-            className: 'emoji-marker',
-            html: '🅿️'
-          })
-        });
-      } else if (pin.color === 'orange') {
-        marker = L.marker([pin.lat, pin.lon], {
-          icon: L.divIcon({
-            className: 'emoji-marker',
-            html: '🛠️'
-          })
-        });
-      } else {
-        marker = L.circleMarker([pin.lat, pin.lon], {
-          radius: 8,
-          fillColor: pin.color,
-          color: '#000',
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 0.8
-        });
-      }
-
+      const marker = L.marker([pin.lat, pin.lon]);
       marker.bindPopup(pin.label);
       marker.addTo(map);
     });
