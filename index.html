@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GTA Map - Default Markers Only</title>
+  <title>GTA Map - Full Size</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link
@@ -32,7 +32,7 @@
       zoomSnap: 0.25
     });
 
-    const bounds = [[0, 0], [1651, 1200]];
+    const bounds = [[0, 0], [2047, 1651]];
     const image = L.imageOverlay('gta_map_clean.jpg', bounds).addTo(map);
     map.fitBounds(bounds);
 
